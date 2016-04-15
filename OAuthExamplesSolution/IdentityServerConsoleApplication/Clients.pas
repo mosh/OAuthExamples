@@ -31,7 +31,7 @@ begin
                 AccessTokenType := AccessTokenType.Reference,
                 Flow := Flows.ClientCredentials,
                 ClientSecrets := new List<Secret>,
-                AllowedScopes := new List<string>
+                AllowedScopes := new List<String>
           ));  
 
   clients[0].ClientSecrets.Add(new Secret("F621F470-9731-4A25-80EF-67A6F7C5F4B8".Sha256()));
