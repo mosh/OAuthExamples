@@ -4,6 +4,7 @@ interface
 
 uses
   System.Net.Http,
+  System.Threading,
   IdentityModel.Client,
   System.Linq;
 
@@ -48,7 +49,8 @@ begin
   if(assigned(client))then
   begin
       var scope := 'api1';
-      var t := client.RequestClientCredentialsAsync(scope);
+      var token:CancellationToken ;
+      var t := client.RequestClientCredentialsAsync(scope,nil,nil);
       t.Wait;
       exit t.Result;
   end

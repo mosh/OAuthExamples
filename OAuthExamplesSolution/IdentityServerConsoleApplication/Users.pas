@@ -21,10 +21,10 @@ implementation
 class method Users.Get: List<InMemoryUser>;
 begin
   var users := new List<InMemoryUser>;
-  users.AddRange(new InMemoryUser(UserName:='bob',Password:='secret',Subject:='1'));
-  users.AddRange(new InMemoryUser(UserName:='alice',Password:='secret',Subject:='2'));
+  users.Add(new InMemoryUser(UserName:='bob',Password:='secret',Subject:='1'));
+  users.Add(new InMemoryUser(UserName:='alice',Password:='secret',Subject:='2'));
 
-  exit Users;
+  exit users;
 end;
 
 end.
