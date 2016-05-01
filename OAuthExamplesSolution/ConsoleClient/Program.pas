@@ -14,6 +14,7 @@ type
   private
     class method GetClientToken:TokenResponse;
     class method CallApi(response:TokenResponse);
+    class method GetUserToken():TokenResponse;
 
   public
     class method Main(args: array of String): Int32;
@@ -28,12 +29,10 @@ begin
 
 //  var tester := new APITester;
 //  tester.performTest;
-
-  var response := GetClientToken;
+//  var response := GetClientToken;
+  var response := GetUserToken;
 
   CallApi(response);
-
-
 
   writeLn('Finished');
 
@@ -50,7 +49,7 @@ begin
   begin
       var scope := 'api1';
       var token:CancellationToken ;
-      var t := client.RequestClientCredentialsAsync(scope,nil,nil);
+      var t := client.RequestClientCredentialsAsync(scope,nil,token);
       t.Wait;
       exit t.Result;
   end
@@ -60,6 +59,20 @@ begin
     exit nil;
   end;
 end;
+
+class method Program.GetUserToken():TokenResponse;
+begin
+  var client := new TokenClient(
+  "http://localhost:5000/connect/token",
+  "carbon",
+  "21B5F798-BE55-42BC-8AA8-0025B903DC3B");
+
+  var token:CancellationToken ;
+
+  exit client.RequestResourceOwnerPasswordAsync("bob", "secret", "api1",nil,token).Result;
+end;
+
+
 
 class method Program.CallApi(response: TokenResponse);
 begin

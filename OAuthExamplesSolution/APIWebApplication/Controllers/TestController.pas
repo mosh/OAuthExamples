@@ -7,7 +7,8 @@ uses
   System.Linq,
   System.Security.Claims,
   System.Text, 
-  System.Web.Http;
+  System.Web.Http, 
+  System.Web.UI.WebControls.Expressions;
 
 type
 
@@ -25,8 +26,14 @@ method TestController.Get: IHttpActionResult;
 begin
   var caller := User as ClaimsPrincipal;
 
-  exit Json(new class (message := 'OK computer', client := caller.FindFirst('client_id').Value));
+  var subjectClaim := caller.FindFirst("sub");
 
+  if(assigned(subjectClaim))Then
+  begin
+    exit Json(new class (message := 'OK computer', client := caller.FindFirst('client_id').Value, subject := subjectClaim.Value));
+  end;
+
+  exit Json(new class (message := 'OK computer', client := caller.FindFirst('client_id').Value));
 
 end;
 

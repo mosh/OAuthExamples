@@ -26,7 +26,7 @@ begin
     Factory := new IdentityServerServiceFactory()
       .UseInMemoryClients(Clients.Get)
       .UseInMemoryScopes(Scopes.Get)
-      .UseInMemoryUsers(new List<InMemoryUser>),
+      .UseInMemoryUsers(Users.Get),
       RequireSsl:=false
   );
   app.UseIdentityServer(options);
